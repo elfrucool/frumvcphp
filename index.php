@@ -1,11 +1,15 @@
 <?php
 $CONFIG = init();
+
 $controllerName = _get($_GET, 'controller', $CONFIG['DEFAULT_CONTROLLER']);
 $controllerClassName = "{$controllerName}Controller";
 $action = _get($_GET, 'action', $CONFIG['DEFAULT_ACTION']);
+
 require_once("controllers/{$controllerClassName}.php");
+
 $controller = new $controllerClassName();
 $modelAndView = $controller->$action($_REQUEST);
+
 extract($modelAndView->getModel());
 require_once("views/$controllerName/{$modelAndView->getView()}.php");
 
